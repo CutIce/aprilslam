@@ -37,6 +37,9 @@ namespace aprilslam
         double fy = intrinsic_eigen(1, 1);
         double cx = intrinsic_eigen(0, 2);
         double cy = intrinsic_eigen(1, 2);
+
+        ROS_INFO_STREAM_ONCE("fx = %f, fy = %f, cx = %f, cy = %f" << fx << fy << cx <<cy);
+
         K_ = Cal3_S2::shared_ptr(new Cal3_S2(fx, fy, 0, cx, cy));
     }
 

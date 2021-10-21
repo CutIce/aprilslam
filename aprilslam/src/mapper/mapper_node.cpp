@@ -222,22 +222,48 @@ namespace aprilslam
 
     bool MapperNode::GetGoodTags(const std::vector<Apriltag> tags_c, std::vector<Apriltag> *tags_c_good)
     {
-        std::vector<Apriltag> tags_c_tmp = tags_c;
+//        std::vector<Apriltag> tags_c_tmp = tags_c;
+//
+//        std::sort(tags_c_tmp.begin(), tags_c_tmp.end(), [](Apriltag tag1, Apriltag tag2)
+//                  { return tag1.id < tag2.id; });
+//        for (const Apriltag &tag_c : tags_c_tmp)
+//        {
+//            // Only use the five smallest id tags because tag with smaller id is closer
+//            // TODO: Custom your own filter condition here!
+//            if (tags_c_good->size() >= 5)
+//                break;
+//            tags_c_good->push_back(tag_c);
+//            if (IsInsideImageCenter(tag_c.center.x, tag_c.center.y, model_.cameraInfo().width, model_.cameraInfo().height, 5))
+//            {
+//                
+//            }
+//        }
+//        return !tags_c_good->empty();
+        
+        /******************** My method of filtering the tags ****************/
 
-        std::sort(tags_c_tmp.begin(), tags_c_tmp.end(), [](Apriltag tag1, Apriltag tag2)
-                  { return tag1.id < tag2.id; });
-        for (const Apriltag &tag_c : tags_c_tmp)
-        {
-            //Only use the five smallest id tags because tag with smaller id is closer
-            // TODO: Custom your own filter condition here!
-            if (tags_c_good->size() >= 5)
-                break;
-            tags_c_good->push_back(tag_c);
-            if (IsInsideImageCenter(tag_c.center.x, tag_c.center.y, model_.cameraInfo().width, model_.cameraInfo().height, 5))
-            {
-                
-            }
+
+        std::vector<Apriltag> tmp_c_tags = tags_c;
+        
+        std::sort(tmp_c_tags.begin(), tmp_c_tags.end(), [](Apriltag tag1, Apriltag tag2){
+            double dist1 = pow(tag1.pose.position.x, 2) + pow(tag1.pose.position.y, 2) + pow(tag1.pose.position.z, 2);
+            double dist2 = pow(tag2.pose.position.x, 2) + pow(tag2.pose.position.y, 2) + pow(tag2.pose.position.z, 2);
+            return dist1 < dist2;
+        });
+
+
+        int prev_good_size = tags_c_good->size();
+        double dist[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
+
+
+        int use_tag_cnt = tmp_c_tags.size() >= 5 ? 5 : (int)tags_c.size();
+        for (int i = 0; i < use_tag_cnt; ++i) {
+            tags_c_good->push_back(tmp_c_tags[i]);
+            dist[i] = pow(tmp_c_tags[i].pose.position.x, 2) + pow(tmp_c_tags[i].pose.position.y, 2) + pow(tmp_c_tags[i].pose.position.z, 2);
         }
+
+        ROS_INFO_STREAM_THROTTLE(10,  "\n    number of tags_c: " << tags_c.size() << "\n    number of previous good tags: " << prev_good_size << "\n    number of now good tags: " << tags_c_good->size()
+                                     << "\n    min 5 dist: " << dist[0] << "  " << dist[1] << "  " << dist[2] << "  " << dist[3] << "  " << dist[4]);
         return !tags_c_good->empty();
     }
 

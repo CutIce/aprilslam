@@ -37,7 +37,7 @@ int main(int argc, char **argv)
         pose.header.frame_id = "/map";
         pose.pose.position.x = transform.getOrigin().x();
         pose.pose.position.y = transform.getOrigin().y();
-        pose.pose.position.z = transform.getOrigin().z(); 
+        pose.pose.position.z = transform.getOrigin().z();
         pose.pose.orientation.x = transform.getRotation().x();
         pose.pose.orientation.y = transform.getRotation().y();
         pose.pose.orientation.z = transform.getRotation().z();
