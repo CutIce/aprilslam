@@ -1,4 +1,26 @@
 tags:
+  -
+    id : 5
+    translation: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+
+  -
+    id : 6
+    translation: [ 0.5, 0, 0 ]
+    rotation: [ 0, 0, 0, 1 ]
+  -
+    id : 7
+    translation: [ 0.8, 0, 0 ]
+    rotation: [ 0, 0, 0, 1 ]
+  -
+    id : 8
+    translation: [ -0.5, 0, 0 ]
+    rotation: [ 0, 0, 0, 1 ]
+  -
+    id : 10
+    translation: [ 0.3, 0, 0 ]
+    rotation: [ 0, 0, 0, 1 ]
+
   - 
     id : 30
     translation: [0, 0, 0]

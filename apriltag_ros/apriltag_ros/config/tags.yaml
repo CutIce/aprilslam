@@ -19,6 +19,13 @@
 #   ]
 standalone_tags:
   [
+    {id: 5, size: 0.2},
+    {id: 6, size: 0.2},
+    {id: 7, size: 0.2},
+    {id: 8, size: 0.2},
+    {id: 10, size: 0.2},
+
+
     {id: 30, size: 0.4},
     {id: 31, size: 0.4},
     {id: 32, size: 0.4},

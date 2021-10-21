@@ -15,7 +15,7 @@ int main(int argc, char **argv)
     tf::TransformListener tf_listener;
     ros::Publisher pose_pub = node.advertise<geometry_msgs::PoseStamped>("/camera_pose_in_map", 1, true);
     
-    ros::Rate freq(30);
+    ros::Rate freq(60);
     while (ros::ok())
     {
         // 获取 camera 在map下的tf
@@ -28,7 +28,7 @@ int main(int argc, char **argv)
         catch (tf::TransformException &ex)
         {
             /* code for Catch */
-            ROS_ERROR("%s", ex.what());
+            ROS_ERROR("In tf_publisher.cpp, %s", ex.what());
             ros::Duration(1.0).sleep();
         }
 
